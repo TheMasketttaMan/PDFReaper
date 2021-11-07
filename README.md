@@ -1,7 +1,9 @@
 # PDF Reaper
 tl;dr: throw pdf onto it, get pngs
 
-It wont ever do anything except that
+Properly does transparency
+
+Wont ever do anything except that
 
 You'll need PyMuPDF to compile
 
