@@ -5,4 +5,4 @@ It wont ever do anything except that
 
 You'll need PyMuPDF to compile
 
-Designed to be used as an .exe, which you can find in them builds
+Meant to be used as an .exe, which you can find in them releases
