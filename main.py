@@ -37,7 +37,7 @@ try:
                 pixmap = fitz.Pixmap(pixmap, mask)
                 info.append("has alpha")
             else:
-                info.append("fucked up, skipping")
+                info.append("size mismatch -> writing as opaque")
 
         # make pixmap w/o smask
         else:
