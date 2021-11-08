@@ -23,24 +23,36 @@ for i in range(len(doc)):
 # create image set, killin dupes
 all_images_set = set(all_images)
 
-# loop through image set writing pngs
+# loop thru images set saving em
 try:
-    for i, imageref in enumerate(all_images_set):
-        xref = imageref[0]
-        smask = imageref[1]
-        if smask > 0:
-            pix0 = fitz.Pixmap(doc.extract_image(xref)["image"])
-            mask = fitz.Pixmap(doc.extract_image(smask)["image"])
-            if pix0.width == mask.width and pix0.height == mask.height:
-                pix = fitz.Pixmap(pix0, mask)
-                pix.save(savedir + "output_%s.png" % i)
-                print("writing image " + str(i) + "/" + str(len(all_images_set)))
+    for i, item in enumerate(all_images_set): # xref [0] smask [1]
+        info = []
+
+        # apply smask if necessary
+        if item[1] > 0:
+            pixmap = fitz.Pixmap(doc.extract_image(item[0])["image"])
+            mask = fitz.Pixmap(doc.extract_image(item[1])["image"])
+            # stretch smask if necessary
+            if mask.width == pixmap.width and mask.height == pixmap.height:
+                pixmap = fitz.Pixmap(pixmap, mask)
+                info.append("has alpha")
             else:
-                print("writing image " + str(i) + "/" + str(len(all_images_set)) + " fucked up, skipping")
+                info.append("fucked up, skipping")
+
+        # make pixmap w/o smask
         else:
-            pix = fitz.Pixmap(doc, xref)
-            pix.save(savedir + "output_%s.png" % i)
-            print("writing image " + str(i) + "/" + str(len(all_images_set)))
+            pixmap = fitz.Pixmap(doc, item[0])
+
+        # convert to srgb if necessary
+        if hasattr(pixmap.colorspace, 'name') and pixmap.colorspace.name not in (fitz.csGRAY.name, fitz.csRGB.name):
+            pixmap = fitz.Pixmap(fitz.csRGB, pixmap)
+            info.append("converted to RGB")
+
+        # write png
+        pixmap.save(savedir + "output_%s.png" % i)
+        print("writing image " + str(i) + "/" + str(len(all_images_set)), end=' ')
+        print(*info, sep=", ")
+
 except Exception as pidor:
     with open('error.txt', 'w') as f:
         f.write(str(pidor))
