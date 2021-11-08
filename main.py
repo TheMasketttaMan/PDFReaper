@@ -32,7 +32,7 @@ try:
         if item[1] > 0:
             pixmap = fitz.Pixmap(doc.extract_image(item[0])["image"])
             mask = fitz.Pixmap(doc.extract_image(item[1])["image"])
-            # stretch smask if necessary
+            # check if smask of proper size
             if mask.width == pixmap.width and mask.height == pixmap.height:
                 pixmap = fitz.Pixmap(pixmap, mask)
                 info.append("has alpha")
