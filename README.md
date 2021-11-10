@@ -5,8 +5,8 @@ Wont ever do anything except that
 
 You'll need PyMuPDF & Pillow (maybe) to compile
 
-Properly does transparency
+Properly does transparency *for RGB images only*
 
-Converts CMYK to RGB
+Accepts CMYK
 
 Meant to be used as an .exe, which you can find in them releases
