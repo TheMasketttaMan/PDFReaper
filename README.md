@@ -3,7 +3,7 @@ tl;dr: throw pdf onto it, get pngs
 
 Wont ever do anything except that
 
-You'll need PyMuPDF & Pillow (maybe) to compile
+You'll need PyMuPDF & Pillow (maybe)
 
 Properly does transparency *for RGB images only*
 
